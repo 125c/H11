@@ -1,0 +1,91 @@
+﻿@model H1.Models.Store
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout_Manager.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Store</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreLocationX)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreLocationX)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreLocationY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreLocationY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreTelephone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreTelephone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StorePay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StorePay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreIdentifyChineseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreIdentifyChineseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Chain.ChainName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Chain.ChainName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StoreIdentify }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

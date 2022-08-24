@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HerLin0030Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreIdentify" />
+          </Key>
+          <Property Name="StoreIdentify" Type="nchar" MaxLength="6" Nullable="false" />
+          <Property Name="StoreAddress" Type="nvarchar" MaxLength="30" />
+          <Property Name="StoreLocationX" Type="numeric" Precision="38" Scale="38" />
+          <Property Name="StoreLocationY" Type="numeric" Precision="38" Scale="38" />
+          <Property Name="StoreLocation" Type="geography" />
+          <Property Name="StoreTelephone" Type="nvarchar" MaxLength="20" />
+          <Property Name="StorePay" Type="bit" />
+          <Property Name="StoreText" Type="nvarchar" MaxLength="1000" />
+          <Property Name="StoreIdentifyChain" Type="nchar" MaxLength="3" />
+          <Property Name="StoreIdentifyChineseName" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityContainer Name="HerLin0030ModelStoreContainer">
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HerLin0030Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreIdentify" />
+          </Key>
+          <Property Name="StoreIdentify" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="StoreAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="StoreLocationX" Type="Decimal" Precision="38" Scale="38" />
+          <Property Name="StoreLocationY" Type="Decimal" Precision="38" Scale="38" />
+          <Property Name="StoreLocation" Type="Geography" />
+          <Property Name="StoreTelephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="StorePay" Type="Boolean" />
+          <Property Name="StoreText" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="StoreIdentifyChain" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="StoreIdentifyChineseName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="HerLin0030Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Store" EntityType="Self.Store" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HerLin0030ModelStoreContainer" CdmEntityContainer="HerLin0030Entities">
+          <EntitySetMapping Name="Store">
+            <EntityTypeMapping TypeName="HerLin0030Model.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="StoreIdentify" ColumnName="StoreIdentify" />
+                <ScalarProperty Name="StoreAddress" ColumnName="StoreAddress" />
+                <ScalarProperty Name="StoreLocationX" ColumnName="StoreLocationX" />
+                <ScalarProperty Name="StoreLocationY" ColumnName="StoreLocationY" />
+                <ScalarProperty Name="StoreLocation" ColumnName="StoreLocation" />
+                <ScalarProperty Name="StoreTelephone" ColumnName="StoreTelephone" />
+                <ScalarProperty Name="StorePay" ColumnName="StorePay" />
+                <ScalarProperty Name="StoreText" ColumnName="StoreText" />
+                <ScalarProperty Name="StoreIdentifyChain" ColumnName="StoreIdentifyChain" />
+                <ScalarProperty Name="StoreIdentifyChineseName" ColumnName="StoreIdentifyChineseName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

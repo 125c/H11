@@ -1,0 +1,64 @@
+﻿@model IEnumerable<H1.Models.Member>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_Manager.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("新增會員", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberAccount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberPassword)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberSNS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberType1.MemberType1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberAccount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberPassword)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberSNS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberType1.MemberType1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.MemberAccount }) |
+            @Html.ActionLink("Details", "Details", new { id = item.MemberAccount }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.MemberAccount })
+        </td>
+    </tr>
+}
+
+</table>

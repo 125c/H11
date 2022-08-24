@@ -1,0 +1,33 @@
+﻿@using System.Data
+@model System.Data.DataTable
+@*@model IEnumerable<H1.Models.Store>*@
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<div class="row">
+    @foreach (DataRow row in Model.Rows)
+    {  
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h2>店名:@row[4]</h2>
+                </div>
+                <div class="panel-body">
+                    <h3>地址:@row[1]</h3>
+                    <h3>電話:@row[2]</h3>
+                    <h3>特價:@row[3]</h3>
+    
+                </div>
+            </div>
+        </div>
+    }
+</div>
+請輸入要查詢的店家：<input id="Text1" type="text" />
+
+<input id="Submit1" type="submit" value="送出" />
+
+

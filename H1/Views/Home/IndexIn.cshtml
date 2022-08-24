@@ -1,0 +1,70 @@
+﻿@*@model IEnumerable<H1.Models.Store>*@
+@using System.Data
+@model System.Data.DataTable
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_Manager.cshtml";
+}
+
+<h2>飲料店列表</h2>
+<p>
+    @Html.ActionLink("新增飲料店", "Create","Stores")
+    
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            商店編號 @Model.Columns[0].ColumnName
+        </th>
+        <th>
+            @Model.Columns[1].ColumnName
+        </th>
+        <th>
+            @Model.Columns[2].ColumnName
+        </th>
+        <th>
+            @Model.Columns[3].ColumnName
+        </th>
+        <th>
+            @Model.Columns[4].ColumnName
+        </th>
+        <th>
+            @Model.Columns[5].ColumnName
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (DataRow row in Model.Rows)
+    {
+        <tr>
+            <td>
+                @row[0]
+            </td>
+            <td>
+                @row[1]
+            </td>
+            <td>
+                @row[2]
+            </td>
+            <td>
+                @row[3]
+            </td>
+            <td>
+                @row[4]
+            </td>
+            <td>
+                @row[5]
+            </td>
+
+            <td>
+                @Html.ActionLink("編輯", "Edit") |
+                @Html.ActionLink("詳細", "Details") |
+                @Html.ActionLink("刪除", "Delete")
+            </td>
+        </tr>
+    }
+
+</table>

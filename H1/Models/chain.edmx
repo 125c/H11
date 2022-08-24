@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HerLin0030Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Chain">
+          <Key>
+            <PropertyRef Name="ChainIdentify" />
+          </Key>
+          <Property Name="ChainIdentify" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="ChainName" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberAccount" />
+          </Key>
+          <Property Name="MemberAccount" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MemberPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="MemberSNS" Type="nvarchar" MaxLength="30" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="30" />
+          <Property Name="MemberTime" Type="datetime2" Precision="7" />
+          <Property Name="MemberType" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="MemberType">
+          <Key>
+            <PropertyRef Name="MemberTypeIdentify" />
+          </Key>
+          <Property Name="MemberTypeIdentify" Type="tinyint" Nullable="false" />
+          <Property Name="MemberType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PictureType">
+          <Key>
+            <PropertyRef Name="PictureTypeNumber" />
+          </Key>
+          <Property Name="PictureTypeNumber" Type="tinyint" Nullable="false" />
+          <Property Name="PictureTypeType" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Search">
+          <Key>
+            <PropertyRef Name="SearchTime" />
+          </Key>
+          <Property Name="SearchTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SearchIP" Type="nvarchar" MaxLength="63" />
+          <Property Name="SearchChain" Type="nchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreIdentify" />
+          </Key>
+          <Property Name="StoreIdentify" Type="nchar" MaxLength="6" Nullable="false" />
+          <Property Name="StoreAddress" Type="nvarchar" MaxLength="30" />
+          <Property Name="StoreLocationX" Type="numeric" Precision="38" Scale="38" />
+          <Property Name="StoreLocationY" Type="numeric" Precision="38" Scale="38" />
+          <Property Name="StoreLocation" Type="geography" />
+          <Property Name="StoreTelephone" Type="nvarchar" MaxLength="20" />
+          <Property Name="StorePay" Type="bit" />
+          <Property Name="StoreText" Type="nvarchar" MaxLength="1000" />
+          <Property Name="StoreIdentifyChain" Type="nchar" MaxLength="3" />
+          <Property Name="StoreIdentifyChineseName" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="StorePicture">
+          <Key>
+            <PropertyRef Name="StorePictureNumberTime" />
+          </Key>
+          <Property Name="StorePictureNumberTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="StorePictureNumberSID" Type="nchar" MaxLength="6" />
+          <Property Name="StorePictureNumberType" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StorePictureNumberPicture" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserSearchSN" />
+          </Key>
+          <Property Name="UserSearchSN" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserSearchTime" Type="datetime2" Precision="7" />
+          <Property Name="UserType" Type="tinyint" />
+          <Property Name="UserContent" Type="nvarchar" MaxLength="1000" />
+          <Property Name="UserAccount" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="UserTypeIdentify" />
+          </Key>
+          <Property Name="UserTypeIdentify" Type="tinyint" Nullable="false" />
+          <Property Name="UserTypeContent" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Member_MemberType">
+          <End Role="MemberType" Type="Self.MemberType" Multiplicity="0..1" />
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberType">
+              <PropertyRef Name="MemberTypeIdentify" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="MemberType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Search_Chain">
+          <End Role="Chain" Type="Self.Chain" Multiplicity="0..1" />
+          <End Role="Search" Type="Self.Search" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chain">
+              <PropertyRef Name="ChainIdentify" />
+            </Principal>
+            <Dependent Role="Search">
+              <PropertyRef Name="SearchChain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Store_Chain">
+          <End Role="Chain" Type="Self.Chain" Multiplicity="0..1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chain">
+              <PropertyRef Name="ChainIdentify" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="StoreIdentifyChain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StorePicture_PictureType">
+          <End Role="PictureType" Type="Self.PictureType" Multiplicity="1" />
+          <End Role="StorePicture" Type="Self.StorePicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PictureType">
+              <PropertyRef Name="PictureTypeNumber" />
+            </Principal>
+            <Dependent Role="StorePicture">
+              <PropertyRef Name="StorePictureNumberType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StorePicture_Store">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="StorePicture" Type="Self.StorePicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreIdentify" />
+            </Principal>
+            <Dependent Role="StorePicture">
+              <PropertyRef Name="StorePictureNumberSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberAccount" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Search">
+          <End Role="Search" Type="Self.Search" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Search">
+              <PropertyRef Name="SearchTime" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserSearchTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="UserTypeIdentify" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HerLin0030Model1StoreContainer">
+          <EntitySet Name="Chain" EntityType="Self.Chain" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberType" EntityType="Self.MemberType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PictureType" EntityType="Self.PictureType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Search" EntityType="Self.Search" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StorePicture" EntityType="Self.StorePicture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Member_MemberType" Association="Self.FK_Member_MemberType">
+            <End Role="MemberType" EntitySet="MemberType" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Search_Chain" Association="Self.FK_Search_Chain">
+            <End Role="Chain" EntitySet="Chain" />
+            <End Role="Search" EntitySet="Search" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Store_Chain" Association="Self.FK_Store_Chain">
+            <End Role="Chain" EntitySet="Chain" />
+            <End Role="Store" EntitySet="Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StorePicture_PictureType" Association="Self.FK_StorePicture_PictureType">
+            <End Role="PictureType" EntitySet="PictureType" />
+            <End Role="StorePicture" EntitySet="StorePicture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StorePicture_Store" Association="Self.FK_StorePicture_Store">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="StorePicture" EntitySet="StorePicture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Member" Association="Self.FK_User_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Search" Association="Self.FK_User_Search">
+            <End Role="Search" EntitySet="Search" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserType" Association="Self.FK_User_UserType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HerLin0030Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Chain">
+          <Key>
+            <PropertyRef Name="ChainIdentify" />
+          </Key>
+          <Property Name="ChainIdentify" Type="String" MaxLength="3" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ChainName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Search" Relationship="Self.FK_Search_Chain" FromRole="Chain" ToRole="Search" />
+          <NavigationProperty Name="Store" Relationship="Self.FK_Store_Chain" FromRole="Chain" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberAccount" />
+          </Key>
+          <Property Name="MemberAccount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MemberPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MemberSNS" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MemberName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MemberTime" Type="DateTime" Precision="7" />
+          <Property Name="MemberType" Type="Byte" />
+          <NavigationProperty Name="MemberType1" Relationship="Self.FK_Member_MemberType" FromRole="Member" ToRole="MemberType" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Member" FromRole="Member" ToRole="User" />
+        </EntityType>
+        <EntityType Name="MemberType">
+          <Key>
+            <PropertyRef Name="MemberTypeIdentify" />
+          </Key>
+          <Property Name="MemberTypeIdentify" Type="Byte" Nullable="false" />
+          <Property Name="MemberType1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_Member_MemberType" FromRole="MemberType" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="PictureType">
+          <Key>
+            <PropertyRef Name="PictureTypeNumber" />
+          </Key>
+          <Property Name="PictureTypeNumber" Type="Byte" Nullable="false" />
+          <Property Name="PictureTypeType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StorePicture" Relationship="Self.FK_StorePicture_PictureType" FromRole="PictureType" ToRole="StorePicture" />
+        </EntityType>
+        <EntityType Name="Search">
+          <Key>
+            <PropertyRef Name="SearchTime" />
+          </Key>
+          <Property Name="SearchTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SearchIP" Type="String" MaxLength="63" FixedLength="false" Unicode="true" />
+          <Property Name="SearchChain" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Chain" Relationship="Self.FK_Search_Chain" FromRole="Search" ToRole="Chain" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Search" FromRole="Search" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreIdentify" />
+          </Key>
+          <Property Name="StoreIdentify" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="StoreAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="StoreLocationX" Type="Decimal" Precision="38" Scale="38" />
+          <Property Name="StoreLocationY" Type="Decimal" Precision="38" Scale="38" />
+          <Property Name="StoreLocation" Type="Geography" />
+          <Property Name="StoreTelephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="StorePay" Type="Boolean" />
+          <Property Name="StoreText" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="StoreIdentifyChain" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="StoreIdentifyChineseName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Chain" Relationship="Self.FK_Store_Chain" FromRole="Store" ToRole="Chain" />
+          <NavigationProperty Name="StorePicture" Relationship="Self.FK_StorePicture_Store" FromRole="Store" ToRole="StorePicture" />
+        </EntityType>
+        <EntityType Name="StorePicture">
+          <Key>
+            <PropertyRef Name="StorePictureNumberTime" />
+          </Key>
+          <Property Name="StorePictureNumberTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="StorePictureNumberSID" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
+          <Property Name="StorePictureNumberType" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StorePictureNumberPicture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="PictureType" Relationship="Self.FK_StorePicture_PictureType" FromRole="StorePicture" ToRole="PictureType" />
+          <NavigationProperty Name="Store" Relationship="Self.FK_StorePicture_Store" FromRole="StorePicture" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserSearchSN" />
+          </Key>
+          <Property Name="UserSearchSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserSearchTime" Type="DateTime" Precision="7" />
+          <Property Name="UserType" Type="Byte" />
+          <Property Name="UserContent" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UserAccount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_User_Member" FromRole="User" ToRole="Member" />
+          <NavigationProperty Name="Search" Relationship="Self.FK_User_Search" FromRole="User" ToRole="Search" />
+          <NavigationProperty Name="UserType1" Relationship="Self.FK_User_UserType" FromRole="User" ToRole="UserType" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="UserTypeIdentify" />
+          </Key>
+          <Property Name="UserTypeIdentify" Type="Byte" Nullable="false" />
+          <Property Name="UserTypeContent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_UserType" FromRole="UserType" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Search_Chain">
+          <End Role="Chain" Type="Self.Chain" Multiplicity="0..1" />
+          <End Role="Search" Type="Self.Search" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chain">
+              <PropertyRef Name="ChainIdentify" />
+            </Principal>
+            <Dependent Role="Search">
+              <PropertyRef Name="SearchChain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Store_Chain">
+          <End Role="Chain" Type="Self.Chain" Multiplicity="0..1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chain">
+              <PropertyRef Name="ChainIdentify" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="StoreIdentifyChain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_MemberType">
+          <End Role="MemberType" Type="Self.MemberType" Multiplicity="0..1" />
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberType">
+              <PropertyRef Name="MemberTypeIdentify" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="MemberType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberAccount" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StorePicture_PictureType">
+          <End Role="PictureType" Type="Self.PictureType" Multiplicity="1" />
+          <End Role="StorePicture" Type="Self.StorePicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PictureType">
+              <PropertyRef Name="PictureTypeNumber" />
+            </Principal>
+            <Dependent Role="StorePicture">
+              <PropertyRef Name="StorePictureNumberType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Search">
+          <End Role="Search" Type="Self.Search" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Search">
+              <PropertyRef Name="SearchTime" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserSearchTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StorePicture_Store">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="StorePicture" Type="Self.StorePicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreIdentify" />
+            </Principal>
+            <Dependent Role="StorePicture">
+              <PropertyRef Name="StorePictureNumberSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="UserTypeIdentify" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HerLin0030Entitieschain" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Chain" EntityType="Self.Chain" />
+          <EntitySet Name="Member" EntityType="Self.Member" />
+          <EntitySet Name="MemberType" EntityType="Self.MemberType" />
+          <EntitySet Name="PictureType" EntityType="Self.PictureType" />
+          <EntitySet Name="Search" EntityType="Self.Search" />
+          <EntitySet Name="Store" EntityType="Self.Store" />
+          <EntitySet Name="StorePicture" EntityType="Self.StorePicture" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" />
+          <AssociationSet Name="FK_Search_Chain" Association="Self.FK_Search_Chain">
+            <End Role="Chain" EntitySet="Chain" />
+            <End Role="Search" EntitySet="Search" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Store_Chain" Association="Self.FK_Store_Chain">
+            <End Role="Chain" EntitySet="Chain" />
+            <End Role="Store" EntitySet="Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_MemberType" Association="Self.FK_Member_MemberType">
+            <End Role="MemberType" EntitySet="MemberType" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Member" Association="Self.FK_User_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StorePicture_PictureType" Association="Self.FK_StorePicture_PictureType">
+            <End Role="PictureType" EntitySet="PictureType" />
+            <End Role="StorePicture" EntitySet="StorePicture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Search" Association="Self.FK_User_Search">
+            <End Role="Search" EntitySet="Search" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StorePicture_Store" Association="Self.FK_StorePicture_Store">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="StorePicture" EntitySet="StorePicture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserType" Association="Self.FK_User_UserType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HerLin0030Model1StoreContainer" CdmEntityContainer="HerLin0030Entitieschain">
+          <EntitySetMapping Name="Chain">
+            <EntityTypeMapping TypeName="HerLin0030Model1.Chain">
+              <MappingFragment StoreEntitySet="Chain">
+                <ScalarProperty Name="ChainIdentify" ColumnName="ChainIdentify" />
+                <ScalarProperty Name="ChainName" ColumnName="ChainName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member">
+            <EntityTypeMapping TypeName="HerLin0030Model1.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="MemberAccount" ColumnName="MemberAccount" />
+                <ScalarProperty Name="MemberPassword" ColumnName="MemberPassword" />
+                <ScalarProperty Name="MemberSNS" ColumnName="MemberSNS" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="MemberTime" ColumnName="MemberTime" />
+                <ScalarProperty Name="MemberType" ColumnName="MemberType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberType">
+            <EntityTypeMapping TypeName="HerLin0030Model1.MemberType">
+              <MappingFragment StoreEntitySet="MemberType">
+                <ScalarProperty Name="MemberTypeIdentify" ColumnName="MemberTypeIdentify" />
+                <ScalarProperty Name="MemberType1" ColumnName="MemberType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PictureType">
+            <EntityTypeMapping TypeName="HerLin0030Model1.PictureType">
+              <MappingFragment StoreEntitySet="PictureType">
+                <ScalarProperty Name="PictureTypeNumber" ColumnName="PictureTypeNumber" />
+                <ScalarProperty Name="PictureTypeType" ColumnName="PictureTypeType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Search">
+            <EntityTypeMapping TypeName="HerLin0030Model1.Search">
+              <MappingFragment StoreEntitySet="Search">
+                <ScalarProperty Name="SearchTime" ColumnName="SearchTime" />
+                <ScalarProperty Name="SearchIP" ColumnName="SearchIP" />
+                <ScalarProperty Name="SearchChain" ColumnName="SearchChain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Store">
+            <EntityTypeMapping TypeName="HerLin0030Model1.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="StoreIdentify" ColumnName="StoreIdentify" />
+                <ScalarProperty Name="StoreAddress" ColumnName="StoreAddress" />
+                <ScalarProperty Name="StoreLocationX" ColumnName="StoreLocationX" />
+                <ScalarProperty Name="StoreLocationY" ColumnName="StoreLocationY" />
+                <ScalarProperty Name="StoreLocation" ColumnName="StoreLocation" />
+                <ScalarProperty Name="StoreTelephone" ColumnName="StoreTelephone" />
+                <ScalarProperty Name="StorePay" ColumnName="StorePay" />
+                <ScalarProperty Name="StoreText" ColumnName="StoreText" />
+                <ScalarProperty Name="StoreIdentifyChain" ColumnName="StoreIdentifyChain" />
+                <ScalarProperty Name="StoreIdentifyChineseName" ColumnName="StoreIdentifyChineseName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StorePicture">
+            <EntityTypeMapping TypeName="HerLin0030Model1.StorePicture">
+              <MappingFragment StoreEntitySet="StorePicture">
+                <ScalarProperty Name="StorePictureNumberTime" ColumnName="StorePictureNumberTime" />
+                <ScalarProperty Name="StorePictureNumberSID" ColumnName="StorePictureNumberSID" />
+                <ScalarProperty Name="StorePictureNumberType" ColumnName="StorePictureNumberType" />
+                <ScalarProperty Name="StorePictureNumberPicture" ColumnName="StorePictureNumberPicture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HerLin0030Model1.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="HerLin0030Model1.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserSearchSN" ColumnName="UserSearchSN" />
+                <ScalarProperty Name="UserSearchTime" ColumnName="UserSearchTime" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="UserContent" ColumnName="UserContent" />
+                <ScalarProperty Name="UserAccount" ColumnName="UserAccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserType">
+            <EntityTypeMapping TypeName="HerLin0030Model1.UserType">
+              <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="UserTypeIdentify" ColumnName="UserTypeIdentify" />
+                <ScalarProperty Name="UserTypeContent" ColumnName="UserTypeContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
