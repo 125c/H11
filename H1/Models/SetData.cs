@@ -21,6 +21,8 @@ namespace H1.Models
         }
         public void executeSql(String sql, List<SqlParameter> list)
         {
+  
+
             cmd.CommandText = sql;
             foreach(SqlParameter p in list) 
             {

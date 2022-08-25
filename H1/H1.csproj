@@ -217,6 +217,7 @@
     <Compile Include="Models\UserType.cs">
       <DependentUpon>Store.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VMStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
