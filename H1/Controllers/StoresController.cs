@@ -16,11 +16,25 @@ namespace H1.Controllers
         private HerLin0030EntitiesStore db = new HerLin0030EntitiesStore();
         SetData sd = new SetData();
 
+        //public ActionResult Qstore(String Keyword) {
+            
+        //    var result = db.Store.Where(m=>m.StoreIdentifyChineseName.Contains(Keyword));
+        //    string show = "";
+        //    foreach (var m in result) {
+        //        show += $"店名:{m.StoreIdentifyChineseName}<br />";
+        //        show += $"地址:{m.StoreAddress}<br />";
+        //        show += $"店名:{m.StoreTelephone}<hr />";
+        //    }
+        //    return RedirectToAction("Index", "Stores");
+        //}
+
+
         //GET: Stores
         public ActionResult Index()
         {
             //var store = db.Store.Include(s => s.Chain);
-            return View(db.Store.ToList());
+            //return View(db.Store.ToList());
+            return RedirectToAction("Index", "Stores");
         }
 
         //// GET: Stores/Details/5
@@ -131,72 +145,72 @@ namespace H1.Controllers
         //    return View(store);
         //}
 
-        //// GET: Stores/Edit/5
-        //public ActionResult Edit(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Store store = db.Store.Find(id);
-        //    if (store == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.StoreIdentifyChain = new SelectList(db.Chain, "ChainIdentify", "ChainName", store.StoreIdentifyChain);
-        //    return View(store);
-        //}
+        // GET: Stores/Edit/5
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Store store = db.Store.Find(id);
+            if (store == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.StoreIdentifyChain = new SelectList(db.Chain, "ChainIdentify", "ChainName", store.StoreIdentifyChain);
+            return View(store);
+        }
 
-        //// POST: Stores/Edit/5
-        //// 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        //// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "StoreIdentify,StoreAddress,StoreLocationX,StoreLocationY,StoreLocation,StoreTelephone,StorePay,StoreText,StoreIdentifyChain,StoreIdentifyChineseName")] Store store)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(store).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.StoreIdentifyChain = new SelectList(db.Chain, "ChainIdentify", "ChainName", store.StoreIdentifyChain);
-        //    return View(store);
-        //}
+        // POST: Stores/Edit/5
+        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
+        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "StoreIdentify,StoreAddress,StoreLocationX,StoreLocationY,StoreTelephone,StorePay,StoreText,StoreIdentifyChain,StoreIdentifyChineseName")] Store store)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(store).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.StoreIdentifyChain = new SelectList(db.Chain, "ChainIdentify", "ChainName", store.StoreIdentifyChain);
+            return View(store);
+        }
 
-        //// GET: Stores/Delete/5
-        //public ActionResult Delete(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Store store = db.Store.Find(id);
-        //    if (store == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(store);
-        //}
+        // GET: Stores/Delete/5
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Store store = db.Store.Find(id);
+            if (store == null)
+            {
+                return HttpNotFound();
+            }
+            return View(store);
+        }
 
-        //// POST: Stores/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(string id)
-        //{
-        //    Store store = db.Store.Find(id);
-        //    db.Store.Remove(store);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        // POST: Stores/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            Store store = db.Store.Find(id);
+            db.Store.Remove(store);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

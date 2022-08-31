@@ -16,9 +16,17 @@ namespace H1.Controllers
     {
         GetData gd = new GetData();
         HerLin0030Entitieschain db=new HerLin0030Entitieschain();
-        public ActionResult Index()
+        public ActionResult Index(string keyword)
         {
-            var store0 = gd.querySql("select StoreIdentify,StoreAddress,StoreTelephone,StoreText,StoreIdentifyChineseName from Store where StorePay=0 ", CommandType.Text);
+           
+            //var store1=db.Store.Where(x => x.StoreIdentifyChineseName == storename).ToString().ToList();
+            string sql = $"select StoreIdentify,StoreAddress,StoreTelephone,StoreText,StoreIdentifyChineseName from Store where StorePay=0 AND StoreIdentifyChineseName LIKE '%{keyword}%'";
+
+            //var store0 = gd.querySql("select StoreIdentify,StoreAddress,StoreTelephone,StoreText,StoreIdentifyChineseName from Store where StorePay=0 ", CommandType.Text);
+
+            var store0 = gd.querySql(sql, CommandType.Text);
+            
+
             return View(store0);
         }
         public ActionResult IndexIn()

@@ -8,9 +8,15 @@
 }
 
 <h2>Index</h2>
+請輸入要查詢的店家：
+<form action="@Url.Action("Index","Home")" method="post">
+    <input id="Text1" type="text" name="keyword" />
+    <input id="Submit1" type="submit" value="送出" />
+</form>
+<hr />
 <div class="row">
     @foreach (DataRow row in Model.Rows)
-    {  
+    {
         <div class="col-md-4">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -19,15 +25,13 @@
                 <div class="panel-body">
                     <h3>地址:@row[1]</h3>
                     <h3>電話:@row[2]</h3>
-                    
-    
+
+
                 </div>
             </div>
         </div>
     }
 </div>
-請輸入要查詢的店家：<input id="Text1" type="text" />
 
-<input id="Submit1" type="submit" value="送出" />
 
 
