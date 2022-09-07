@@ -37,36 +37,37 @@ namespace H1.Controllers
             return RedirectToAction("Index", "Stores");
         }
 
-        //// GET: Stores/Details/5
-        //public ActionResult Details(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Store store = db.Store.Find(id);
-        //    if (store == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(store);
-        //}
+        // GET: Stores/Details/5
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Store store = db.Store.Find(id);
+            if (store == null)
+            {
+                return HttpNotFound();
+            }
+            return View(store);
+        }
         public ActionResult Create()
         {
-            List<Chain> chains= db.Chain.ToList();
+            List<Chain> chains = db.Chain.ToList();
             List<SelectListItem> ChainListItem = new List<SelectListItem>();
-            foreach (var x in chains)  
-            {    
-                ChainListItem.Add(new SelectListItem {Value = x.ChainIdentify, Text = x.ChainName });
+            foreach (var x in chains)
+            {
+                ChainListItem.Add(new SelectListItem { Value = x.ChainIdentify, Text = x.ChainName });
             }
             ViewBag.ChainList = ChainListItem;
             ViewData["select ChainIdentify from Chain"] = "select ChainName from Chain";
             ViewBag.SelectListItem = ChainListItem;
             return View();
         }
-        
+
         // GET: Stores/Create
         [HttpPost]
+        
         public ActionResult Create(String StoreIdentify, String StoreAddress,Decimal StoreLocationX,Decimal StoreLocationY, 
                                    String StoreTelephone, bool StorePay, String StoreText, String StoreIdentifyChain, 
                                    String StoreIdentifyChineseName,int PictureTypeNumber,
@@ -101,49 +102,50 @@ namespace H1.Controllers
             sd.executeSql(spType, list2);
             return RedirectToAction("Index", "Stores");
         }
-        public ActionResult upPhoto(Store s,StorePicture sp,HttpPostedFileBase photo)
-        {
-            if (photo == null)
-            {
-                ViewBag.ErrMessage = "請上傳商品照片";
-                return View(sp);
-            }
-            if (db.StorePicture.Find(sp.StorePictureNumberTime) != null)
-            {
-                ViewBag.ErrMessage2 = "照片時間重複";
-                return View(sp);
-            }
-            sp.StorePictureNumberPicture = new byte[photo.ContentLength];
-            photo.InputStream.Read(sp.StorePictureNumberPicture, 0, photo.ContentLength);
-            sp.StorePictureNumberTime = DateTime.Today;
-            s.StorePay = false;
-            ModelState.Remove("StorePictureNumberPicture");
-            if (ModelState.IsValid)
-            {
-                db.StorePicture.Add(sp);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return RedirectToAction("Index");
-        }
+        //public ActionResult upPhoto(Store s,StorePicture sp,HttpPostedFileBase photo)
+        //{
+        //    if (photo == null)
+        //    {
+        //        ViewBag.ErrMessage = "請上傳商品照片";
+        //        return View(sp);
+        //    }
+        //    if (db.StorePicture.Find(sp.StorePictureNumberTime) != null)
+        //    {
+        //        ViewBag.ErrMessage2 = "照片時間重複";
+        //        return View(sp);
+        //    }
+        //    sp.StorePictureNumberPicture = new byte[photo.ContentLength];
+        //    photo.InputStream.Read(sp.StorePictureNumberPicture, 0, photo.ContentLength);
+        //    sp.StorePictureNumberTime = DateTime.Today;
+        //    s.StorePay = false;
+        //    ModelState.Remove("StorePictureNumberPicture");
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.StorePicture.Add(sp);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return RedirectToAction("Index");
+        //}
 
         // POST: Stores/Create
         // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "StoreIdentify,StoreAddress,StoreLocationX,StoreLocationY,StoreTelephone,StorePay,StoreText,StoreIdentifyChain,StoreIdentifyChineseName")] Store store)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Store.Add(store);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Index")]
+        public ActionResult Create([Bind(Include = "StoreIdentify,StoreAddress,StoreLocationX,StoreLocationY,StoreTelephone,StorePay,StoreText,StoreIdentifyChain,StoreIdentifyChineseName")] Store store)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Store.Add(store);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
-        //    ViewBag.StoreIdentifyChain = new SelectList(db.Chain, "ChainIdentify", "ChainName", store.StoreIdentifyChain);
-        //    return View(store);
-        //}
+            ViewBag.StoreIdentifyChain = new SelectList(db.Chain, "ChainIdentify", "ChainName", store.StoreIdentifyChain);
+            return View(store);
+        }
 
         // GET: Stores/Edit/5
         public ActionResult Edit(string id)

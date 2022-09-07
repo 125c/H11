@@ -15,6 +15,9 @@
         <th>
             @Html.DisplayNameFor(model => model.ChainName)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChainIdentify)
+        </th>
         <th></th>
     </tr>
 
@@ -24,9 +27,11 @@
             @Html.DisplayFor(modelItem => item.ChainName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ChainIdentify }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ChainIdentify }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ChainIdentify })
+            @Html.DisplayFor(modelItem => item.ChainIdentify)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ChainIdentify }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ChainIdentify })
         </td>
     </tr>
 }

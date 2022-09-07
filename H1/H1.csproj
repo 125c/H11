@@ -56,6 +56,12 @@
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -146,6 +152,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\StoresController.cs" />
+    <Compile Include="Controllers\upPhotoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -211,6 +218,7 @@
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Store.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\upPhoto.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>Store.tt</DependentUpon>
     </Compile>
@@ -230,6 +238,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -324,6 +333,9 @@
     <Content Include="Views\Home\IndexIn.cshtml" />
     <Content Include="Views\Chain\Create.cshtml" />
     <Content Include="Views\Chain\Index.cshtml" />
+    <Content Include="Views\Chain\Edit.cshtml" />
+    <Content Include="Views\Chain\Delete.cshtml" />
+    <Content Include="Views\upPhoto\upPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

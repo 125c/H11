@@ -9,6 +9,9 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using H1.Models;
+using PagedList;
+using PagedList.Mvc;
+
 
 namespace H1.Controllers
 {
@@ -16,17 +19,13 @@ namespace H1.Controllers
     {
         GetData gd = new GetData();
         HerLin0030Entitieschain db=new HerLin0030Entitieschain();
+        //int pageSize = 10;
         public ActionResult Index(string keyword)
         {
-           
             //var store1=db.Store.Where(x => x.StoreIdentifyChineseName == storename).ToString().ToList();
             string sql = $"select StoreIdentify,StoreAddress,StoreTelephone,StoreText,StoreIdentifyChineseName from Store where StorePay=0 AND StoreIdentifyChineseName LIKE '%{keyword}%'";
-
             //var store0 = gd.querySql("select StoreIdentify,StoreAddress,StoreTelephone,StoreText,StoreIdentifyChineseName from Store where StorePay=0 ", CommandType.Text);
-
             var store0 = gd.querySql(sql, CommandType.Text);
-            
-
             return View(store0);
         }
         public ActionResult IndexIn()
@@ -34,6 +33,14 @@ namespace H1.Controllers
             var store = gd.querySql("select StoreIdentify,StoreAddress,StoreTelephone,StoreText,StorePay,StoreIdentifyChineseName from Store", CommandType.Text);
             return View(store);
         }
+        //public ActionResult IndexIn(int page = 1)
+        //{
+        //    int currentPage = page < 1 ? 1 : page;
+        //    var storeslist = db.Store.OrderBy(m => m.StoreIdentify).ToList();
+        //    var result = storeslist.ToPagedList(currentPage, pageSize);
+        //    var store = gd.querySql("select StoreIdentify,StoreAddress,StoreTelephone,StoreText,StorePay,StoreIdentifyChineseName from Store", CommandType.Text);
+        //    return View(result);
+        //}
         [HttpGet]
         public ActionResult Login()
         {

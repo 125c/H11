@@ -1,0 +1,77 @@
+﻿@model IEnumerable<H1.Models.StorePicture>
+@using System.Data
+@model System.Data.DataTable
+
+@{
+    ViewBag.Title = "upPhoto";
+    Layout = "~/Views/Shared/_Layout_Manager.cshtml";
+}
+
+<h2>upPhoto</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<form action="@Url.Action("UploadImage", "upPhoto")" method="post" enctype="multipart/form-data">
+
+    <input type="file" accept=".png, .jpg, .jpeg" name="File" id="File" />
+    <input type="submit" value="上傳" />
+
+</form>
+@{
+    byte[] photo = TempData["Data"] == null ? null : TempData["Data"] as byte[];
+    string imageData = null;
+    if (photo != null)
+    {
+
+        string base64 = Convert.ToBase64String(photo);
+        imageData = string.Format("data:image/gif;base64,{0}", base64);
+    }
+
+}
+<br />
+
+<img src="@imageData" />
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Model.Columns[0].ColumnName
+            @*@Html.DisplayNameFor(model => model.StorePictureNumberPicture)*@
+        </th>
+        <th>
+            @Model.Columns[1].ColumnName
+            @*@Html.DisplayNameFor(model => model.PictureType.PictureTypeType)*@
+        </th>
+        <th>
+            @Model.Columns[2].ColumnName
+            @*@Html.DisplayNameFor(model => model.Store.StoreAddress)*@
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (DataRow row in Model.Rows)
+    {
+        <tr>
+            <td>
+                @row[0]
+                @*@Html.DisplayFor(modelItem => item.StorePictureNumberPicture)*@
+            </td>
+            <td>
+                @row[1]
+                @*@Html.DisplayFor(modelItem => item.PictureType.PictureTypeType)*@
+            </td>
+            <td>
+                @row[2]
+                @*@Html.DisplayFor(modelItem => item.Store.StoreAddress)*@
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "upPhoto") |
+                @Html.ActionLink("Details", "Details", "upPhoto") |
+                @Html.ActionLink("Delete", "Delete", "upPhoto")
+            </td>
+        </tr>
+    }
+
+</table>
