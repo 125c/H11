@@ -20,8 +20,7 @@ namespace H1.Models
             this.Search = new HashSet<Search>();
             this.Store = new HashSet<Store>();
         }
-
-       
+    
         public string ChainIdentify { get; set; }
         public string ChainName { get; set; }
     
@@ -29,9 +28,5 @@ namespace H1.Models
         public virtual ICollection<Search> Search { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Store> Store { get; set; }
-
-        private object chain;
-
-       
     }
 }

@@ -18,6 +18,7 @@ namespace H1.Models
         public string StorePictureNumberSID { get; set; }
         public byte StorePictureNumberType { get; set; }
         public byte[] StorePictureNumberPicture { get; set; }
+        public string StorePictureNumberPictureFile { get; set; }
     
         public virtual PictureType PictureType { get; set; }
         public virtual Store Store { get; set; }

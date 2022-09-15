@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="HerLin0030Model1.PictureType" Width="1.5" PointX="3" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HerLin0030Model1.Search" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HerLin0030Model1.Store" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HerLin0030Model1.StorePicture" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HerLin0030Model1.StorePicture" Width="2.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HerLin0030Model1.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HerLin0030Model1.User" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HerLin0030Model1.UserType" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />

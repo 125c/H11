@@ -6,33 +6,33 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout_Manager.cshtml";
+    String aa="";
 }
 
 <h2>飲料店列表</h2>
 <p>
     @Html.ActionLink("新增飲料店", "Create", "Stores")
-
 </p>
 
 <table class="table">
     <tr>
         <th>
-            商店編號 @Model.Columns[0].ColumnName
+            商店編號 @*@Model.Columns[0].ColumnName*@
         </th>
         <th>
-            @Model.Columns[1].ColumnName
+            店家地址@*@Model.Columns[1].ColumnName*@
         </th>
         <th>
-            @Model.Columns[2].ColumnName
+            店家電話@*@Model.Columns[2].ColumnName*@
         </th>
         <th>
-            @Model.Columns[3].ColumnName
+            特價資訊@*@Model.Columns[3].ColumnName*@
         </th>
         <th>
-            @Model.Columns[4].ColumnName
+            是否付費@*@Model.Columns[4].ColumnName*@
         </th>
         <th>
-            @Model.Columns[5].ColumnName
+            店家店名@*@Model.Columns[5].ColumnName*@
         </th>
         <th></th>
     </tr>
@@ -58,11 +58,12 @@
             <td>
                 @row[5]
             </td>
-
+            
+        
             <td>
-                @Html.ActionLink("編輯", "Edit", "Stores") |
-                @Html.ActionLink("詳細", "Details", "Stores") |
-                @Html.ActionLink("刪除", "Delete", "Stores")
+                @Html.ActionLink("編輯", "Edit", "Stores",new { id = row[0] },null) |
+                @Html.ActionLink("詳細", "Details", "Stores", new { id = row[0] }, null) |
+                @Html.ActionLink("刪除", "Delete", "Stores", new { id = row[0] }, null)
             </td>
         </tr>
     }

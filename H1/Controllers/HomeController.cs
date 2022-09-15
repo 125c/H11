@@ -42,10 +42,13 @@ namespace H1.Controllers
         //    return View(result);
         //}
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(string keyword)
         {
-            var store1 = gd.querySql("select StoreIdentify,StoreAddress,StoreTelephone,StoreText,StoreIdentifyChineseName from Store", CommandType.Text);
-            return View(store1);
+            //string sql = $"select StoreIdentify,StoreAddress,StoreTelephone,StoreText,StoreIdentifyChineseName from Store where StorePay=0 AND StoreIdentifyChineseName LIKE '%{keyword}%'";
+            //var store0 = gd.querySql(sql, CommandType.Text);
+            //var store= db.Store.Where(x=>x.StorePay == false && x.StoreIdentifyChineseName.Contains(keyword)).ToList();
+            //return View(store);
+            return View();
         }
 
         [HttpPost]
@@ -56,14 +59,23 @@ namespace H1.Controllers
             //var result="select* from member where memberid = id and memberpwd = password";
             if (result != null)
             { 
-                if (option == 1) { return RedirectToAction("第一個Action"); }//使用者會員，進來要看到所有店家資訊
+                if (option == 1) { return RedirectToAction("option1", "Home"); }//使用者會員，進來要看到所有店家資訊
                 if (option == 2) { return RedirectToAction("第一個Action"); }//店家非會員，進來要看到自己的編輯畫面，沒有text跟pay
                 if (option == 3) { return RedirectToAction("第一個Action"); }//店家會員，進來要看到自己的編輯畫面
                 if (option == 4) { return RedirectToAction("IndexIn", "Home"); }
             }
             return View();
         }
-        
+
+        public ActionResult option1() {
+
+            var store1 = gd.querySql("select StoreIdentify,StoreAddress,StoreTelephone,StoreText,StoreIdentifyChineseName from Store", CommandType.Text);
+            var store = db.Store.ToList();
+            return View(store);
+
+        }
+
+
 
         public ActionResult About()
         {

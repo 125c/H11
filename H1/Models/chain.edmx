@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HerLin0030Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HerLin0030Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Chain">
           <Key>
             <PropertyRef Name="ChainIdentify" />
@@ -51,8 +51,8 @@
           </Key>
           <Property Name="StoreIdentify" Type="nchar" MaxLength="6" Nullable="false" />
           <Property Name="StoreAddress" Type="nvarchar" MaxLength="30" />
-          <Property Name="StoreLocationX" Type="numeric" Precision="38" Scale="38" />
-          <Property Name="StoreLocationY" Type="numeric" Precision="38" Scale="38" />
+          <Property Name="StoreLocationX" Type="numeric" Precision="38" Scale="10" />
+          <Property Name="StoreLocationY" Type="numeric" Precision="38" Scale="10" />
           <Property Name="StoreLocation" Type="geography" />
           <Property Name="StoreTelephone" Type="nvarchar" MaxLength="20" />
           <Property Name="StorePay" Type="bit" />
@@ -68,6 +68,7 @@
           <Property Name="StorePictureNumberSID" Type="nchar" MaxLength="6" />
           <Property Name="StorePictureNumberType" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StorePictureNumberPicture" Type="varbinary(max)" />
+          <Property Name="StorePictureNumberPictureFile" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -236,8 +237,7 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HerLin0030Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -295,8 +295,8 @@
           </Key>
           <Property Name="StoreIdentify" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="StoreAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="StoreLocationX" Type="Decimal" Precision="38" Scale="38" />
-          <Property Name="StoreLocationY" Type="Decimal" Precision="38" Scale="38" />
+          <Property Name="StoreLocationX" Type="Decimal" Precision="38" Scale="10" />
+          <Property Name="StoreLocationY" Type="Decimal" Precision="38" Scale="10" />
           <Property Name="StoreLocation" Type="Geography" />
           <Property Name="StoreTelephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="StorePay" Type="Boolean" />
@@ -316,6 +316,7 @@
           <Property Name="StorePictureNumberPicture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="PictureType" Relationship="Self.FK_StorePicture_PictureType" FromRole="StorePicture" ToRole="PictureType" />
           <NavigationProperty Name="Store" Relationship="Self.FK_StorePicture_Store" FromRole="StorePicture" ToRole="Store" />
+          <Property Name="StorePictureNumberPictureFile" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -558,6 +559,7 @@
           <EntitySetMapping Name="StorePicture">
             <EntityTypeMapping TypeName="HerLin0030Model1.StorePicture">
               <MappingFragment StoreEntitySet="StorePicture">
+                <ScalarProperty Name="StorePictureNumberPictureFile" ColumnName="StorePictureNumberPictureFile" />
                 <ScalarProperty Name="StorePictureNumberTime" ColumnName="StorePictureNumberTime" />
                 <ScalarProperty Name="StorePictureNumberSID" ColumnName="StorePictureNumberSID" />
                 <ScalarProperty Name="StorePictureNumberType" ColumnName="StorePictureNumberType" />

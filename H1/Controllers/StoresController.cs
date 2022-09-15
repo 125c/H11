@@ -33,8 +33,8 @@ namespace H1.Controllers
         public ActionResult Index()
         {
             //var store = db.Store.Include(s => s.Chain);
-            //return View(db.Store.ToList());
-            return RedirectToAction("Index", "Stores");
+            return View(db.Store.ToList());
+            //return RedirectToAction("Index", "Stores");
         }
 
         // GET: Stores/Details/5

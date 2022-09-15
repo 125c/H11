@@ -35,6 +35,5 @@ namespace H1.Models
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserType> UserType { get; set; }
-        public object ChainIdentify { get; internal set; }
     }
 }

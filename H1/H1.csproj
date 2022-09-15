@@ -56,6 +56,9 @@
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -123,9 +126,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -162,7 +162,7 @@
       <DependentUpon>chain.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Chain.cs">
-      <DependentUpon>Store.tt</DependentUpon>
+      <DependentUpon>chain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\chain.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -176,16 +176,16 @@
     </Compile>
     <Compile Include="Models\GetData.cs" />
     <Compile Include="Models\Member.cs">
-      <DependentUpon>Store.tt</DependentUpon>
+      <DependentUpon>chain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MemberType.cs">
-      <DependentUpon>Store.tt</DependentUpon>
+      <DependentUpon>chain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PictureType.cs">
-      <DependentUpon>Store.tt</DependentUpon>
+      <DependentUpon>chain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Search.cs">
-      <DependentUpon>Store.tt</DependentUpon>
+      <DependentUpon>chain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SetData.cs" />
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
@@ -200,7 +200,7 @@
       <DependentUpon>Store.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Store.cs">
-      <DependentUpon>Store.tt</DependentUpon>
+      <DependentUpon>chain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Store.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -213,17 +213,17 @@
       <DependentUpon>Store.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StorePicture.cs">
-      <DependentUpon>Store.tt</DependentUpon>
+      <DependentUpon>chain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>Store.tt</DependentUpon>
+      <DependentUpon>chain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\upPhoto.cs" />
     <Compile Include="Models\User.cs">
-      <DependentUpon>Store.tt</DependentUpon>
+      <DependentUpon>chain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserType.cs">
-      <DependentUpon>Store.tt</DependentUpon>
+      <DependentUpon>chain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VMStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -336,6 +336,7 @@
     <Content Include="Views\Chain\Edit.cshtml" />
     <Content Include="Views\Chain\Delete.cshtml" />
     <Content Include="Views\upPhoto\upPhoto.cshtml" />
+    <Content Include="Views\Home\option1.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

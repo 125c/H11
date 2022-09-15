@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<H1.Models.StorePicture>
 @using System.Data
-@model System.Data.DataTable
+@*@model System.Data.DataTable*@
 
 @{
     ViewBag.Title = "upPhoto";
@@ -37,34 +37,35 @@
 <table class="table">
     <tr>
         <th>
-            @Model.Columns[0].ColumnName
-            @*@Html.DisplayNameFor(model => model.StorePictureNumberPicture)*@
+            @*@Model.Columns[0].ColumnName*@
+            @Html.DisplayNameFor(model => model.StorePictureNumberPicture)
         </th>
         <th>
-            @Model.Columns[1].ColumnName
-            @*@Html.DisplayNameFor(model => model.PictureType.PictureTypeType)*@
+            @*@Model.Columns[1].ColumnName*@
+            @Html.DisplayNameFor(model => model.PictureType.PictureTypeType)
         </th>
         <th>
-            @Model.Columns[2].ColumnName
-            @*@Html.DisplayNameFor(model => model.Store.StoreAddress)*@
+            @*@Model.Columns[2].ColumnName*@
+            @Html.DisplayNameFor(model => model.Store.StoreAddress)
         </th>
         <th></th>
     </tr>
 
-    @foreach (DataRow row in Model.Rows)
+    @*@foreach (DataRow row in Model.Rows)*@
+        @foreach(var item in Model)
     {
         <tr>
             <td>
-                @row[0]
-                @*@Html.DisplayFor(modelItem => item.StorePictureNumberPicture)*@
+                @*@row[0]*@
+                @Html.DisplayFor(modelItem => item.StorePictureNumberPicture)
             </td>
             <td>
-                @row[1]
-                @*@Html.DisplayFor(modelItem => item.PictureType.PictureTypeType)*@
+                @*@row[1]*@
+                @Html.DisplayFor(modelItem => item.PictureType.PictureTypeType)
             </td>
             <td>
-                @row[2]
-                @*@Html.DisplayFor(modelItem => item.Store.StoreAddress)*@
+                @*@row[2]*@
+                @Html.DisplayFor(modelItem => item.Store.StoreAddress)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", "upPhoto") |

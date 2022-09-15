@@ -1,33 +1,14 @@
 ﻿@model List<H1.Models.Store>
 @{
     ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Login</h2>
 
-<form action="@Url.Action("Login")" method="post">
-    Member acc:
-    <input id="id" type="text" name="id" />
-    pw:
-    <input id="name" type="password" name="password" />
-    身分別?
-    <select id="Select1" name="option">
-        <option value="1">使用者會員</option>
-        <option value="2">店家非會員</option>
-        <option value="3">店家會員</option>
-        <option value="4">管理者</option>
-    </select>
-    <input id="Submit1" type="submit" value="登入" />
-    <hr />
-    @ViewBag.Msg
-</form>
-<!--<div class="row">-->
-    @*@foreach (var item in Model) {
-            <div>
-                @Html.DisplayFor(modelitem => item.StoreIdentifyChineseName);
-            </div>
-        }*@
-    <!--@foreach (var item in Model)
+<h2>option1</h2>
+<div>
+
+    @foreach (var item in Model)
     {
         <div class="col-md-4">
             <div class="panel panel-info">
@@ -43,4 +24,4 @@
             </div>
         </div>
     }
-</div>-->
+</div>
