@@ -337,6 +337,7 @@
     <Content Include="Views\Chain\Delete.cshtml" />
     <Content Include="Views\upPhoto\upPhoto.cshtml" />
     <Content Include="Views\Home\option1.cshtml" />
+    <Content Include="Views\Shared\_Layout_Member.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
