@@ -1,0 +1,570 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>棒賽神手</title>
+    <meta charset="utf-8" />
+    <link rel="Shortcut Icon" type="image/x-icon" href="image/baseball.png">
+    <link rel="stylesheet" type="text/css" href="./css/base/jquery-ui.css" />
+    <script type="text/javascript" src="./jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="./jquery-ui.min.js"></script>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- 最新編譯和最佳化的 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <!-- 最新編譯和最佳化的 JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/d3_v4/d3.js" charset="utf-8"></script>
+    <style>
+        div.myTop {
+            position: relative;
+            left: 0;
+            width: 100%;
+            height: 100px; /*請自行調整*/
+            border: 0px solid;
+        }
+
+        @media(max-width: 400px) {
+            div.myTop {
+                display: none;
+            }
+        }
+
+        body {
+            background-color: #e8e8e8;
+            color: #EEE;
+        }
+
+        .titles {
+            font-family: "微軟正黑體", "新細明體";
+            font-size: 36px;
+            font-style: normal;
+            color: 000;
+        }
+
+        .li1:hover .li_dropdown_content1 {
+            display: block;
+        }
+
+        .li_dropdown_content1 {
+            display: none;
+            position: absolute;
+            background-color: #F8F8F8;
+            min-width: 120px;
+            border: 1px solid #3F3F3F;
+        }
+
+        .ul1 {
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            background-color: #333333;
+            //overflow: hidden;
+            position: fixed;
+            top: 0px;
+            width: 100%;
+        }
+
+        .dropbtn {
+            background-color: #aaa;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #f1f1f1
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #555;
+        }
+
+        .tex {
+            color: #000;
+            font-size: 70px;
+            font-family: "Lucida Console", Monaco, monospace;
+            color: white;
+        }
+
+        .tex1 {
+            color: #000;
+            font-size: 50px;
+            font-family: "Lucida Console", Monaco, monospace;
+            color: white;
+        }
+
+        .navbar-brand {
+            font-family: "微軟正黑體";
+            font-size: 38px;
+        }
+
+        .dropdown-toggle {
+            font-family: "微軟正黑體";
+            font-size: 32px;
+            font-style: normal;
+            color: #000000;
+        }
+
+        .titles {
+            font-family: "微軟正黑體";
+            font-size: 60px;
+            font-style: normal;
+            color: red;
+        }
+
+        rect:hover {
+            fill: blue;
+        }
+
+        svg {
+            position: relative
+        }
+
+        #tooltip {
+            position: absolute;
+            width: 400px;
+            height: auto;
+            padding: 10px;
+            background-color: white;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+            -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+            pointer-events: none; /*設定 #tooltip不觸發click,mouseover,mouseout等事件(等同於對滑鼠而言是隱形的)*/
+        }
+
+            #tooltip.hidden {
+                display: none;
+            }
+
+            #tooltip p {
+                margin: 0;
+                font-family: sans-serif;
+                font-size: 28px;
+                line-height: 30px;
+            }
+    </style>
+
+    <script type="text/javascript">
+
+//-----擷取JSON文件--------
+      $(function () {
+          $.getJSON("data/WBgame.json", processData);
+          function processData(data) {
+         		num = 0;		//設定紀錄未來賽事變數
+         		rowcnt =0;
+         		$("table").append("<tr><td>　</td></tr>");
+         		$("table").append("<tr  id=0txt"+rowcnt+" ></tr>");
+         		$("table").append("<tr  id=0img"+rowcnt+" ></tr><tr><td>　</td></tr>");
+//
+				$.each(data, function (index, value) {     //index: data陣列索引   value:data物件內含值
+            		if (value.Rslt ==""){
+             				$("table #0txt"+rowcnt).append("<td class=\"col-sm-6\"style=\"background-color: navy;\" title=\" MLB賽事預測\"><center><a  href=\"TeamName?Atm="+value.Tm+"&Btm="+value.Opp+"&Date="+value.Date.substr(0,4)+"-"+value.Date.substr(5,2)+"-"+value.Date.substr(8,2)+"\"   class=\"tex\"><h1  class=\"tex1\">"
+             							+value.Date.substr(0,4)+"-"+value.Date.substr(5,2)+"-"+value.Date.substr(8,2)+"</h1></a></center><td>　</td>");
+           					$("table #0img"+rowcnt).append("<td class=\"col-sm-6\"style=\"background-color: #999;\" title=\" MLB賽事預測\"><center><a  href=\"TeamName?Atm="+value.Tm+"&Btm="+value.Opp+"&Date="+value.Date.substr(0,4)+"-"+value.Date.substr(5,2)+"-"+value.Date.substr(8,2)+"\"   class=\"tex\">"
+            	  						+value.Tm+"　<img src=image/"+value.Tm+".png width=\"80\" height=\"80\"><br/><img src=image/VS3.jpg  width=\"200\" height=\"120\"><br/>"
+            	  						+value.Opp+"　<img src=image/"+value.Opp+".png width=\"80\" height=\"80\"></a></center><td>　</td>");
+            	            num++;
+             			if ( num %2 == 0 ){
+             					rowcnt+=1;
+             					$("table").append("<tr  id=0txt"+rowcnt+" ></tr>");
+             		         	$("table").append("<tr  id=0img"+rowcnt+" ></tr><tr><td>　</td></tr>");
+
+          	  				 };
+            		  };	//end  value.Rslt ==""
+               	  });		//end  $.each(data)
+               	//紀錄是否有未來賽事
+
+				  if ( num == 0 ){
+     					$("table #0txt0").append("<td class=\"col-sm-6\"style=\"background-color: navy;\" title=\" MLB賽事預測\"><center><h1  class=\"tex1\">無最新MBL賽事</h1></center><td>　</td>");
+   						$("table #0img0").append("<td class=\"col-sm-6\"style=\"background-color: #999;\" title=\" MLB賽事預測\"><center><br/><img src=image/VS3.jpg  width=\"280\" height=\"200\"><br/></center><td>　</td>");
+   						$("table #0txt0").append("<td class=\"col-sm-6\"style=\"background-color: navy;\" title=\" MLB賽事預測\"><center><h1  class=\"tex1\">無最新MBL賽事</h1></center><td>　</td>");
+	   					$("table #0img0").append("<td class=\"col-sm-6\"style=\"background-color: #999;\" title=\" MLB賽事預測\"><center><br/><img src=image/VS4.jpg  width=\"280\" height=\"200\"><br/></center><td>　</td>");
+				  		};
+				 if ( num == 1 ){
+	     				$("table #0txt0").append("<td class=\"col-sm-6\"style=\"background-color: navy;\" title=\" MLB賽事預測\"><center><h1  class=\"tex1\">無最新MBL賽事</h1></center><td>　</td>");
+	   					$("table #0img0").append("<td class=\"col-sm-6\"style=\"background-color: #999;\" title=\" MLB賽事預測\"><center><br/><img src=image/VS4.jpg  width=\"280\" height=\"200\"><br/></center><td>　</td>");
+						};
+				if ( num == 2 ){
+				  		$("table #0txt1").remove();
+						$("table #0img1").remove();
+						};
+				if ( num == 4 ){
+				  		$("table #0txt2").remove();
+						$("table #0img2").remove();
+						};
+         	 };           //end  function processData(data)
+        });				//end  function
+
+      //-----擷取影片JSON文件--------
+        $(function () {
+                $.getJSON("data/WBvideo.json", processVideo);
+               	 function processVideo(data) {
+               			videofn ="";
+               			videoip ="";
+                   		$.each(data, function (index, value) {     //index: data陣列索引   value:data物件內含值
+
+                  	   			videofn = value.videoName;
+                  	   			videoip = value.httpIp;
+                  	  			$("table #0txt"+index ).append("<td style=\"background-color:  teal;\"><center ><h1>"+videofn+"</h1></center></td>");
+                  	   			$("table #0img"+index ).append("<td><article><iframe src=\""+videoip+"?autoplay=1&loop=1&playlist=Ki66YbP6S1k\" frameborder=\"0\" allowfullscreen  height=\"300px;\ setVolume=0\"></iframe></article></td>");
+
+                  	    });		//end  $.each(data)
+               	 };           //end  function processData(data)
+              });				//end  function
+      //-----END擷取影片JSON文件--------
+
+    </script>
+
+    <script type="text/javascript">
+// 	$(function(){
+// 		console.log($("html").css("z-index"))
+// 	})
+		function drawBarChart9(dataset,svg_w,svg_h,svg_padding){
+
+		var xScale =
+			d3.scaleBand()
+//				.domain(d3.range(dataset.length))
+				.domain( dataset.map(function(d){ return d.month }))
+				.rangeRound([svg_padding, svg_w-svg_padding])
+				.paddingInner(0.1);
+
+		var yScale = d3.scaleLinear()
+//			.domain([0, d3.max(dataset)])
+			.domain( [0,d3.max(dataset, function(d){ return (d.tot)})] )
+			.range([svg_h,100]);
+
+		//Create SVG element
+		var svg = d3.select("body #ttt")
+			.append("svg")
+				.attr("width",svg_w)
+				.attr("height",svg_h)
+				.attr("style","border:5px red solid");
+
+		//Define X axis
+		var xAxis =
+			d3.axisBottom(xScale)
+
+		//Create X axis
+		svg.append("g")
+			.attr("class","x axis")
+			.attr("transform","translate(0,"+(svg_h-svg_padding)+")")
+			.call(xAxis);
+
+		d3.selectAll(".x.axis text") //旋轉x軸 tick labels
+//	 		.attr("transform","rotate(-90)")
+			.attr("dx","0em") //x軸位移
+			.attr("dy","2em"); //y軸位移
+
+	  	//Define Y axis
+	  	var yAxis =
+	  		//d3.svg.axis()
+	  		//	.orient("left")
+	  		//	.scale(yScale);
+			d3.axisLeft(yScale);
+
+		//Create Y axis
+		svg.append("g")
+			.attr("class","y axis")
+			.attr("transform","translate("+svg_padding+",-75)")
+			.call(yAxis);
+
+		//Create X-axis label
+		svg.select(".x.axis")
+			.append("text")
+				.attr("x",svg_w/2)
+				.attr("y",svg_padding-20)
+				.attr("text-anchor","middle")
+				.attr("style","font-size:26px;")
+				.attr("fill","black") //v4 需要
+				.text("月　份");
+
+		//Create Y-axis label
+		svg.select(".y.axis")
+			.append("text")
+				.attr("y",(svg_h-svg_padding)-180)
+				.attr("x",25)
+		//			.attr("transform","rotate(90,"+(-svg_padding)+", 0)")
+				.attr("text-anchor","middle")
+				.attr("style","font-size:24px;")
+//				.attr("style","font-family:微軟正黑體;")
+				.attr("fill","black") //v4 需要
+				.text("賽事場數(2016年)");
+
+		//Create bars
+		svg.selectAll("rect")
+			.data(dataset)
+			.enter()
+			.append("rect")
+				.attr("x",function(d,i){ return xScale(d.month) } )
+//				.attr("y",function(d,i){ return (svg_h-svg_padding-yScale(d.tot)) } )
+				.attr("y",function(d,i){ return (svg_h-svg_padding-(svg_h-yScale(d.tot))) } )
+				.attr("width",function(d,i){ return xScale.bandwidth()} )  //v3: xScale.rangeBand()
+				.attr("height",function(d,i){
+					if ( d.tot != 0)
+						return  svg_h-yScale(d.tot);
+					} )
+				.attr("fill",function(d,i){ return "rgb(0,255,0)" })
+
+// 				.append("rect")
+// 				.attr("x",function(d,i){ return xScale(d.month+0.5) } )
+// 				.attr("y",function(d,i){ return (svg_h-svg_padding-yScale(d.tot)) } )
+// 				.attr("width",function(d,i){ return xScale.bandwidth()} )  //v3: xScale.rangeBand()
+// 				.attr("height",function(d,i){
+// 					if (d.ok == 0)
+// 						return 0;
+// 					else
+// 						return yScale(d.ok);
+// 					} )
+//  				.attr("fill",function(d,i){ return "rgb(0,0,225)" })
+
+			.on("mouseover",function(d,i){
+				//SVG Element Tooltips
+				svg.append("text")
+					.attr("x",xScale(i)+xScale.bandwidth()/2+80 ) //v3 xScale.rangeBand()
+					.attr("y",svg_h-yScale(d.tot)-20 )
+					.attr("id","tp" )
+					.attr("text-anchor","middle" )
+					.attr("fill","white" )
+					.attr("font-size","26px" )
+					.attr("font-family","sans-serif" )
+
+					.style("pointer-events","none")//設定 SVG <text>不觸發click,mouseover,mouseout等事件(等同於對滑鼠而言是隱形的)
+													//pointer-events適用presentation attribute
+					.text(d.tot+"場");
+
+				//HTML div Tooltips
+				var xPos = parseFloat(d3.select(this).attr("x"))+xScale.bandwidth()+450;  //v3 xScale.rangeBand()
+				var yPos = parseFloat(d3.select(this).attr("y"))+yScale(d.tot)+150;
+				d3.select("#tooltip")
+					.style("left",xPos+"px")
+					.style("top",yPos+"px")
+					.style("color","red")
+					.select("#value")
+						.text((d.ok/d.tot*100).toFixed(2)+"%／符合預測："+d.ok);
+
+				d3.select("#tooltip")
+					.classed("hidden",false);
+
+			})
+			.on("mouseout",function(d,i){
+				//SVG Element Tooltips
+				d3.select("#tp").remove();
+
+				//HTML div Tooltips
+				d3.select("#tooltip").classed("hidden", true);
+			});
+	}
+    </script>
+
+</head>
+<body>
+    <hr />
+    <input type="button" id="btn_Test" value="test" style="display:none" />
+    <div class="container">
+        <div class="myTop">
+            <br>
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <!-- 網頁輪播 -->
+                    <!-- 第一頁輪播 -->
+                    <div class="item active">
+                        <div class="row">
+                            <a href="./g1.html">
+                                <div class="col-sm-2" style="background-color: #CCC;">
+                                    <img src="image/CHC.png" width="35" height="35"> 8 <img src="image/Like.png" width="30" height="30"><br />
+                                    <img src="image/SEA.png" width="35" height="35"> 7
+                                </div>
+                            </a>
+                            <a href="./g1.html">
+                                <div class="col-sm-2" style="background-color: #999; border:1 px dotted ">
+                                    <img src="image/SFG.png" width="35" height="35"> 6 <img src="image/Like.png" width="30" height="30"><br />
+                                    <img src="image/TOR.png" width="35" height="35"> 3
+                                </div>
+                            </a>
+                            <a href="./g1.html">
+                                <div class="col-sm-2" style="background-color: #CCC;">
+                                    <img src="image/CWS.png" width="35" height="35"> 6 <img src="image/Like.png" width="30" height="30"><br />
+                                    <img src="image/DET.png" width="35" height="35"> 3
+                                </div>
+                            </a>
+                            <a href="./g1.html">
+                                <div class="col-sm-2" style="background-color:#999;">
+                                    <img src="image/BOS.png" width="35" height="35"> 6 <img src="image/Like.png" width="30" height="30"><br />
+                                    <img src="image/COL.png" width="35" height="35"> 3
+                                </div>
+                            </a>
+                            <a href="./g1.html">
+                                <div class="col-sm-2" style="background-color: #CCC;">
+                                    <img src="image/MIN.png" width="35" height="35"> 6 <img src="image/Like.png" width="30" height="30"><br />
+                                    <img src="image/LAD.png" width="35" height="35"> 3
+                                </div>
+                            </a>
+                            <a href="./g1.html">
+                                <div class="col-sm-2" style="background-color:#999;">
+                                    <img src="image/CHC.png" width="35" height="35"> 8 <img src="image/Like.png" width="30" height="30"><br />
+                                    <img src="image/MIA.png" width="35" height="35"> 7
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- END 第一頁輪播 -->
+                    <!-- 第二頁輪播 -->
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-sm-2" style="background-color: #CCC;">
+                                <img src="image/DET.png" width="35" height="35"> 8 <img src="image/Like.png" width="30" height="30"><br />
+                                <img src="image/PIT.png" width="35" height="35"> 7
+                            </div>
+                            <div class="col-sm-2" style="background-color:#999;">
+                                <img src="image/SDP.png" width="35" height="35"> 6 <img src="image/Like.png" width="30" height="30"><br />
+                                <img src="image/HOU.png" width="35" height="35"> 3
+                            </div>
+                            <div class="col-sm-2" style="background-color: #CCC;">
+                                <img src="image/CWS.png" width="35" height="35"> 8 <img src="image/Like.png" width="30" height="30"><br />
+                                <img src="image/OAK.png" width="35" height="35"> 7
+                            </div>
+                            <div class="col-sm-2" style="background-color:#999;">
+                                <img src="image/KC.png" width="35" height="35"> 6 <img src="image/Like.png" width="30" height="30"><br />
+                                <img src="image/TOR.png" width="35" height="35"> 3
+                            </div>
+                            <div class="col-sm-2" style="background-color: #CCC;">
+                                <img src="image/LAA.png" width="35" height="35"> 6 <img src="image/Like.png" width="30" height="30"><br />
+                                <img src="image/HOU.png" width="35" height="35"> 3
+                            </div>
+                            <div class="col-sm-2" style="background-color:#999;">
+                                <img src="image/CWS.png" width="35" height="35"> 8 <img src="image/Like.png" width="30" height="30"><br />
+                                <img src="image/NYY.png" width="35" height="35"> 7
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END 第二頁輪播 -->
+                </div>
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!-- Static navbar -->
+        <nav class=" navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header"></div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li></li>
+                        <li class="dropdown">
+                            <ul class="dropdown-menu"></ul>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+            <!--/.container-fluid -->
+        </nav>
+    </div>
+    <!-- END 網頁輪播 -->
+    <!-- 網頁導航列 -->
+    <div class="container">
+        <center>
+            <nav class=" navbar-inverse">
+                <div class="container-fluid">
+
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">MLB 棒賽神手</a>
+                    </div>
+
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="Hpabout.html" class="dropdown-toggle" title="團隊介紹">關於我們</a></li>
+
+                            <li>
+                                <a href="file:///C:/Users/III/Desktop/sport%20betting%20project%201128/Homepage.html#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    相關網站消息<span class="caret"></span>
+                                </a>	<!---span會產生下拉的▽-->
+                                <ul class="dropdown-menu">
+                                    <li><a href="http://tslc.stats.com/mlb/standings.asp" Target="_blank" title=" MLB最新戰績" class="dropdown-toggle">戰績排行</a></li>
+                                    <li><a href="https://www.sportslottery.com.tw/web/guest/news-release" Target="_blank" title="臺彩公司運彩新聞" class="dropdown-toggle">運彩新聞</a></li>
+                                    <li><a href="http://mlb.mlb.com/home" Target="_blank" title="美國MLB官網" class="dropdown-toggle">MLB官網</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a href="HPSearch.html" class="dropdown-toggle" title="系統過往預測實績">過往預測成果</a></li>
+
+                            <li>
+                                <a href="file:///C:/Users/III/Desktop/sport%20betting%20project%201128/Homepage.html#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    會員登錄<span class="caret"></span>
+                                </a>	<!---span會產生下拉的▽-->
+                                <ul class="dropdown-menu">
+                                    <li><a href="signForm.jsp" title="我要參加會員" class="dropdown-toggle">加入會員</a></li>
+                                    <li><a href="loginForm.jsp" title="歡迎蒞臨，請進!!" class="dropdown-toggle">本會會員</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+            </nav>
+        </center>
+        <!--賽事video與未來賽事預測(Future's Games)-->
+        <center class="titles"><T class="col-sm-12">未來賽事預測&#x1F440（Guess!）</center>
+        <center>
+            <div id="ttt">
+                <div id="tooltip" class="hidden">
+                    <p><strong>系統預測準確率</strong></p>
+                    <p><span id="value">100</span>場</p>
+                </div>
+                <script type="text/javascript">
+
+				d3.json("data/sumguess.json", function(d){
+				drawBarChart9(d,1100,350,75);
+				 });
+                </script>
+            </div>
+        </center>
+        <!-- 各項未來賽事區 -->
+        <table>
+        </table>
+        <!-- END各項未來賽事區 -->
+        <hr />
+    </div>
+    <!--END 賽事video與未來賽事預測(Future's Games)-->
+</body>
+</html>
